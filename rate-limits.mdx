@@ -1,0 +1,43 @@
+---
+title: "Rate limits"
+description: "Learn about our rate limits"
+---
+
+We have a strict rate limit policy to ensure the quality of service for all our users.
+
+## Rate Limit by Plan
+
+The following table outlines the rate limits (requests per minute) for each plan:
+
+| Plan       | Limit                   |
+| ---------- | ----------------------- |
+| **Free**   | 10 requests per minute  |
+| **Launch** | 150 requests per minute |
+| **Scale**  | 300 requests per minute |
+| **Pro**    | 300 requests per minute |
+
+## Custom Rate Limits
+
+Pro plan customers can purchase higher rate limits if the standard limits don't meet their needs. If you require increased capacity, please contact our support team with details about your use case and expected request volume.
+
+Custom rate limit packages are available starting at 500 requests per minute, with options for enterprise-level throughput based on your specific requirements.
+
+## Rate Limit Headers
+
+When making API requests, the following headers are included in the response to help you track your rate limit usage:
+
+| Header                   | Description                                                       | Example      |
+| ------------------------ | ----------------------------------------------------------------- | ------------ |
+| `x-rate-limit-limit`     | The maximum number of requests allowed in the current time window | `60`         |
+| `x-rate-limit-remaining` | The number of requests remaining in the current time window       | `54`         |
+| `x-rate-limit-reset`     | The Unix timestamp (in seconds) when the rate limit window resets | `1740405419` |
+
+### Example
+
+```
+x-rate-limit-limit: 60
+x-rate-limit-remaining: 54
+x-rate-limit-reset: 1740405419
+```
+
+You can use these headers to implement backoff strategies and avoid hitting rate limits in your applications.
