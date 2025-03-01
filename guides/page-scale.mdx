@@ -1,0 +1,82 @@
+---
+title: "Page scale"
+description: "Adjust the size of rendered content by specifying a scale factor for the webpage"
+icon: "magnifying-glass"
+---
+
+The `scale` parameter allows you to control the size of the rendered content by applying a scaling factor.
+
+## Overview
+
+When rendering a webpage to PDF, you may want to adjust the size of the content to better fit the page or improve readability. The `scale` parameter lets you enlarge or reduce the content proportionally.
+
+## Parameter Details
+
+<ResponseField name="scale" type="number" default="1">
+  Controls the size of the rendered content by applying a scaling factor
+  
+  Range: `0.1` to `2`
+</ResponseField>
+
+## Usage
+
+```javascript
+{
+  "parts": "https://example.com",
+  "scale": 0.8
+}
+```
+
+## Behavior
+
+- **Values below 1.0**: Reduce the size of the content (e.g., `0.5` makes content half the original size)
+- **Value of 1.0**: Render content at its original size (default)
+- **Values above 1.0**: Enlarge the content (e.g., `1.5` makes content 50% larger)
+
+## Use Cases
+
+This parameter is particularly useful for:
+
+1. **Fitting more content per page**: Use values below 1.0 to reduce content size and fit more information on each page.
+
+2. **Improving readability**: Use values above 1.0 to enlarge content for better readability, especially for small text.
+
+3. **Adjusting for print**: Scale down content that would otherwise overflow the page boundaries.
+
+4. **Mobile-optimized content**: Adjust the scale to better render mobile websites when converting to PDF.
+
+## Examples
+
+### Reducing Content Size
+
+```javascript
+{
+  "parts": "https://example.com",
+  "scale": 0.75
+}
+```
+
+### Enlarging Content
+
+```javascript
+{
+  "parts": "https://example.com",
+  "scale": 1.5
+}
+```
+
+### Combining with Other Parameters
+
+```javascript
+{
+  "parts": "https://example.com",
+  "scale": 0.9,
+  "margin": {
+    "top": 10,
+    "right": 10,
+    "bottom": 10,
+    "left": 10,
+    "unit": "mm"
+  }
+}
+``` 

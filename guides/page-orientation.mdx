@@ -1,0 +1,81 @@
+---
+title: "Page orientation"
+description: "Control the orientation of PDF pages by specifying portrait or landscape mode"
+icon: "rotate"
+---
+
+The `orientation` parameter allows you to control the orientation of pages in the generated PDF.
+
+## Overview
+
+When generating a PDF, you can choose between portrait (taller than wide) or landscape (wider than tall) orientation. The `orientation` parameter lets you specify which orientation to use for all pages in the document.
+
+## Parameter Details
+
+<ResponseField name="orientation" type="enum<string>" default="portrait">
+  Controls the orientation of pages in the generated PDF
+  
+  Available options: `portrait`, `landscape`
+</ResponseField>
+
+## Usage
+
+```javascript
+{
+  "parts": "https://example.com",
+  "orientation": "portrait" // or "landscape"
+}
+```
+
+## Behavior
+
+- **`portrait`**: Creates pages that are taller than they are wide, suitable for typical documents, articles, and reports.
+- **`landscape`**: Creates pages that are wider than they are tall, ideal for content with wide tables, charts, or images.
+
+## Use Cases
+
+This parameter is particularly useful for:
+
+1. **Data visualization**: Use `landscape` for documents containing wide charts, tables, or diagrams that benefit from horizontal space.
+
+2. **Photo collections**: Use `landscape` for displaying wide-format photographs or panoramic images.
+
+3. **Standard documents**: Use `portrait` for typical text-heavy documents, articles, and reports that read vertically.
+
+4. **Presentation handouts**: Use `landscape` for materials derived from slide presentations to maintain the original aspect ratio.
+
+## Example
+
+### Portrait Mode (Default)
+
+```javascript
+{
+  "parts": "https://example.com/annual-report",
+  "orientation": "portrait"
+}
+```
+
+### Landscape Mode
+
+```javascript
+{
+  "parts": "https://example.com/data-dashboard",
+  "orientation": "landscape"
+}
+```
+
+## Combining with Size
+
+The `orientation` parameter works in conjunction with the `size` parameter. When both are specified, the orientation is applied to the specified page size.
+
+```javascript
+{
+  "parts": "https://example.com",
+  "size": {
+    "preset": "a4"
+  },
+  "orientation": "landscape"
+}
+```
+
+In this example, the PDF will be generated with A4 pages in landscape orientation.

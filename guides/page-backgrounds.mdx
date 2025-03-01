@@ -1,0 +1,73 @@
+---
+title: "Page backgrounds"
+description: "Control whether background images and colors are included in the rendered PDF"
+icon: "image"
+---
+
+The `include_backgrounds` parameter allows you to control whether background images and colors are included in the rendered PDF.
+
+## Overview
+
+When rendering a webpage to PDF, you may want to control whether background elements are included. The `include_backgrounds` parameter lets you toggle this behavior to optimize for different use cases.
+
+## Parameter Details
+
+<ResponseField name="include_backgrounds" type="boolean" default="true">
+  Controls whether background images and colors are included in the rendered PDF
+</ResponseField>
+
+## Usage
+
+```javascript
+{
+  "parts": "https://example.com",
+  "include_backgrounds": false
+}
+```
+
+## Behavior
+
+- **`true`**: Includes all background images and colors in the rendered PDF.
+- **`false`**: Omits background images and colors from the rendered PDF.
+
+## Use Cases
+
+This parameter is particularly useful for:
+
+1. **Print optimization**: Disable backgrounds to create PDFs optimized for printing, reducing ink usage.
+
+2. **File size reduction**: Omit backgrounds to generate smaller PDF files, which can be beneficial for sharing or storage.
+
+3. **Content focus**: Remove potentially distracting background elements to emphasize the main content.
+
+## Examples
+
+### Including Backgrounds (Default)
+
+```javascript
+{
+  "parts": "https://example.com",
+  "include_backgrounds": true
+}
+```
+
+### Excluding Backgrounds
+
+```javascript
+{
+  "parts": "https://example.com",
+  "include_backgrounds": false
+}
+```
+
+### Optimized for Print
+
+```javascript
+{
+  "parts": "https://example.com",
+  "include_backgrounds": false,
+  "emulate_media_type": "print"
+}
+```
+
+This combination creates a print-optimized PDF without backgrounds, ideal for documents intended to be printed. 

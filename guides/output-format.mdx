@@ -1,0 +1,79 @@
+---
+title: "Output format"
+description: "Choose between standard PDF and PDF/A formats for different compliance and archiving needs"
+icon: "file-pdf"
+---
+
+The `output_format` parameter allows you to specify which PDF format variant to generate.
+
+## Overview
+
+When rendering a PDF, you can choose between standard PDF and PDF/A format. The `output_format` parameter lets you specify which format to use based on your compliance and archiving requirements.
+
+## Parameter Details
+
+<ResponseField name="output_format" type="enum<string>" default="pdf/a">
+  Specifies which PDF format variant to generate
+  
+  Available options: `pdf/a`, `pdf`
+</ResponseField>
+
+## Usage
+
+```javascript
+{
+  "parts": "https://example.com",
+  "output_format": "pdf/a" // or "pdf"
+}
+```
+
+## Behavior
+
+- **`pdf/a`**: Generates a PDF/A-2b compliant document, which is optimized for long-term archiving and ensures the document can be reliably reproduced in the future.
+- **`pdf`**: Generates a standard PDF document without the additional constraints of the PDF/A format.
+
+## Use Cases
+
+This parameter is particularly useful for:
+
+1. **Regulatory compliance**: Use `pdf/a` when you need to comply with archiving regulations or standards that require PDF/A format.
+
+2. **Long-term archiving**: Use `pdf/a` for documents that need to be stored for extended periods and must remain accessible and reproducible.
+
+3. **Optimized file size**: Use `pdf/a` when you need smaller file sizes, as the PDF/A format typically results in more compact documents.
+
+4. **Lossless quality**: Use `pdf` when you need to preserve the highest possible quality of images and graphics without any compression artifacts that might be introduced in the PDF/A format.
+
+## Example
+
+### Creating an archival-quality document
+
+```javascript
+fetch("https://api.vortexpdf.com/api/render", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer YOUR_API_KEY",
+  },
+  body: JSON.stringify({
+    parts: "https://example.com",
+    output_format: "pdf/a",
+  }),
+})
+```
+
+### Creating a standard PDF document
+
+```javascript
+fetch("https://api.vortexpdf.com/api/render", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer YOUR_API_KEY",
+  },
+  body: JSON.stringify({
+    parts: "https://example.com",
+    output_format: "pdf",
+  }),
+})
+``` 

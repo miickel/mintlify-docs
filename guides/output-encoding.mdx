@@ -1,0 +1,99 @@
+---
+title: "Output encoding"
+description: "Control how the PDF is encoded in the API response by specifying binary or base64 format"
+icon: "file-binary"
+---
+
+The `output_encoding` parameter allows you to specify how the PDF should be encoded in the API response.
+
+## Overview
+
+When rendering a PDF synchronously, you can choose how the generated PDF is encoded in the response. The `output_encoding` parameter lets you specify whether to return raw binary data or a base64-encoded string.
+
+## Parameter Details
+
+<ResponseField name="output_encoding" type="enum<string>" default="binary">
+  Specifies how the PDF should be encoded in the API response
+  
+  Available options: `binary`, `base64`
+</ResponseField>
+
+## Usage
+
+```javascript
+{
+  "parts": "https://example.com",
+  "output_encoding": "binary" // or "base64"
+}
+```
+
+## Behavior
+
+- **`binary`**: Returns the PDF as raw binary data in the response body. This is the default behavior.
+- **`base64`**: Returns the PDF as a base64-encoded string in the response body.
+
+## Use Cases
+
+This parameter is particularly useful for:
+
+1. **Direct downloads**: Use `binary` when you want to directly download or stream the PDF to the client.
+
+2. **API integration**: Use `base64` when integrating with systems that expect base64-encoded data or when you need to include the PDF in a JSON response.
+
+3. **Browser compatibility**: Use `base64` when working with JavaScript in browsers where handling binary data might be challenging.
+
+## Example
+
+### Binary Response Handling (Node.js)
+
+```javascript
+fetch("https://api.vortexpdf.com/api/render", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer YOUR_API_KEY",
+  },
+  body: JSON.stringify({
+    parts: "https://example.com",
+    output_encoding: "binary",
+  }),
+})
+  .then((response) => response.arrayBuffer())
+  .then((buffer) => {
+    // Handle binary PDF data
+    fs.writeFileSync("output.pdf", Buffer.from(buffer));
+  });
+```
+
+### Base64 Response Handling (JavaScript)
+
+<Warning>
+  Never include your API key directly in client-side code as it can be exposed
+  to users. Always use a backend service to make API calls that require
+  authentication.
+</Warning>
+
+```javascript
+fetch("https://api.vortexpdf.com/api/render", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer YOUR_API_KEY",
+  },
+  body: JSON.stringify({
+    parts: "https://example.com",
+    output_encoding: "base64",
+  }),
+})
+  .then((response) => response.text())
+  .then((base64String) => {
+    // Create a data URL for embedding in HTML or downloading
+    const dataUrl = `data:application/pdf;base64,${base64String}`;
+
+    // Create a download link
+    const link = document.createElement("a");
+    link.href = dataUrl;
+    link.download = "document.pdf";
+    link.click();
+  });
+```

@@ -1,0 +1,129 @@
+---
+title: "Page margins"
+description: "Control the space between the page edges and content with customizable margins"
+icon: "border-all"
+---
+
+The `margin` parameter allows you to specify the spacing between the page edges and the content of your rendered document.
+
+## Overview
+
+When generating PDFs or other documents, controlling the margins ensures proper spacing around your content. The `margin` parameter lets you define precise margins for all four sides of the document with support for different measurement units.
+
+## Parameter Details
+
+<ResponseField name="margin" type="object" default='{ top: 0, right: 0, bottom: 0, left: 0, unit: "mm" }'>
+  Specifies the spacing between the page edges and the content of your rendered document
+  <Expandable title="Properties">
+    <ResponseField name="top" type="number" required>
+      Top margin in the specified unit
+    </ResponseField>
+    <ResponseField name="right" type="number" required>
+      Right margin in the specified unit
+    </ResponseField>
+    <ResponseField name="bottom" type="number" required>
+      Bottom margin in the specified unit
+    </ResponseField>
+    <ResponseField name="left" type="number" required>
+      Left margin in the specified unit
+    </ResponseField>
+    <ResponseField name="unit" type="enum<string>" default="mm">
+      Measurement unit for margin dimensions
+      
+      Available options: `mm`, `cm`, `in`, `px`
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Usage
+
+```javascript
+{
+  "parts": "https://example.com",
+  "margin": {
+    "top": 10,
+    "right": 10,
+    "bottom": 10,
+    "left": 10,
+    "unit": "mm"
+  }
+}
+```
+
+## Behavior
+
+The margin parameter creates empty space around the content of your document. Each margin value must be a non-negative number (minimum: 0).
+
+## Use Cases
+
+This parameter is particularly useful for:
+
+1. **Print-ready documents**: Set appropriate margins for documents intended for printing.
+
+2. **Professional reports**: Create polished documents with consistent spacing around content.
+
+3. **Custom layouts**: Adjust margins to accommodate headers, footers, or binding space.
+
+4. **Mobile-friendly PDFs**: Optimize reading experience on smaller screens with appropriate margins.
+
+## Examples
+
+### Standard Document Margins
+
+```javascript
+{
+  "parts": "https://example.com",
+  "margin": {
+    "top": 25.4,
+    "right": 25.4,
+    "bottom": 25.4,
+    "left": 25.4,
+    "unit": "mm"
+  }
+}
+```
+
+### Asymmetric Margins for Binding
+
+```javascript
+{
+  "parts": "https://example.com",
+  "margin": {
+    "top": 20,
+    "right": 20,
+    "bottom": 20,
+    "left": 30,  // Wider left margin for binding
+    "unit": "mm"
+  }
+}
+```
+
+### Minimal Margins
+
+```javascript
+{
+  "parts": "https://example.com",
+  "margin": {
+    "top": 5,
+    "right": 5,
+    "bottom": 5,
+    "left": 5,
+    "unit": "mm"
+  }
+}
+```
+
+### Using Different Units
+
+```javascript
+{
+  "parts": "https://example.com",
+  "margin": {
+    "top": 1,
+    "right": 1,
+    "bottom": 1,
+    "left": 1,
+    "unit": "in"  // Inches
+  }
+}
+``` 

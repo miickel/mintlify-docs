@@ -1,0 +1,109 @@
+---
+title: "Page headers and footers"
+description: "Add custom headers and footers to each page of your PDF with dynamic content like page numbers and dates"
+icon: "heading"
+---
+
+The `header_template` and `footer_template` parameters allow you to add custom HTML content to the top and bottom of each page in your PDF.
+
+## Overview
+
+When generating PDFs, it's often useful to include consistent headers and footers on each page. These templates support special CSS classes for dynamic content like page numbers, dates, and titles.
+
+## Parameter Details
+
+<ResponseField name="header_template" type="string">
+  HTML content to display at the top of each page
+  
+  Note: `render_header_footer` must be set to `true` for this template to take effect
+</ResponseField>
+
+<ResponseField name="footer_template" type="string">
+  HTML content to display at the bottom of each page
+  
+  Note: `render_header_footer` must be set to `true` for this template to take effect
+</ResponseField>
+
+<ResponseField name="render_header_footer" type="boolean" default="false">
+  Must be set to `true` for header and footer templates to be rendered
+</ResponseField>
+
+## Usage
+
+```javascript
+{
+  "parts": "https://example.com",
+  "render_header_footer": true,
+  "header_template": "<div style='font-size: 10px; width: 100%; text-align: center;'>Document Title</div>",
+  "footer_template": "<div style='font-size: 10px; width: 100%; text-align: center;'><span class='pageNumber'></span> of <span class='totalPages'></span></div>"
+}
+```
+
+## Special CSS Classes
+
+Both templates support these special CSS classes for dynamic content:
+
+- **`date`**: Current date when the PDF is generated
+- **`title`**: Title of the document (from the HTML `<title>` tag)
+- **`url`**: URL of the page being rendered
+- **`pageNumber`**: Current page number
+- **`totalPages`**: Total number of pages in the document
+
+## Styling Guidelines
+
+1. Templates must contain valid HTML
+2. Use inline styles for consistent rendering
+3. Set explicit width (usually `width: 100%`) for proper alignment
+4. Keep content within reasonable height to avoid overlapping with main content
+5. Use font sizes appropriate for headers/footers (typically 8-12px)
+
+## Use Cases
+
+These parameters are particularly useful for:
+
+1. **Professional documents**: Add company logos, document titles, and page numbers
+2. **Reports**: Include generation date, version information, and pagination
+3. **Legal documents**: Add disclaimers, confidentiality notices, or document identifiers
+4. **Printed materials**: Include contact information or copyright notices
+
+## Examples
+
+### Basic Page Numbers
+
+```javascript
+{
+  "parts": "https://example.com",
+  "render_header_footer": true,
+  "footer_template": "<div style='font-size: 10px; width: 100%; text-align: center;'>Page <span class='pageNumber'></span> of <span class='totalPages'></span></div>"
+}
+```
+
+### Company Header with Logo
+
+```javascript
+{
+  "parts": "https://example.com",
+  "render_header_footer": true,
+  "header_template": "<div style='font-size: 10px; width: 100%; display: flex; justify-content: space-between;'><img src='https://example.com/logo.png' height='20px'><div style='align-self: center;'><span class='title'></span></div></div>"
+}
+```
+
+### Date and URL Footer
+
+```javascript
+{
+  "parts": "https://example.com",
+  "render_header_footer": true,
+  "footer_template": "<div style='font-size: 8px; width: 100%; display: flex; justify-content: space-between;'><div>Generated on <span class='date'></span></div><div><span class='url'></span></div></div>"
+}
+```
+
+### Three-Column Layout
+
+```javascript
+{
+  "parts": "https://example.com",
+  "render_header_footer": true,
+  "footer_template": "<div style='font-size: 8px; width: 100%; display: grid; grid-template-columns: 1fr 1fr 1fr;'><div>CONFIDENTIAL</div><div style='text-align: center;'><span class='pageNumber'></span>/<span class='totalPages'></span></div><div style='text-align: right;'><span class='date'></span></div></div>"
+}
+``` 

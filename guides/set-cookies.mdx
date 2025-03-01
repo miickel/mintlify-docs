@@ -1,0 +1,107 @@
+---
+title: "Set Cookies"
+description: "Set cookies before rendering to access authenticated content or personalized views"
+icon: "cookie"
+---
+
+The `set_cookie` parameter allows you to set cookies before the rendering process begins.
+
+## Overview
+
+When rendering webpages that require authentication or personalization, you may need to set specific cookies. The `set_cookie` parameter lets you configure cookies that will be sent with requests during the rendering process.
+
+## Parameter Details
+
+<ResponseField name="set_cookie" type="object">
+  Configures cookies that will be sent with requests during the rendering process
+  <Expandable title="Properties">
+    <ResponseField name="name" type="string" required>
+      The name of the cookie to set
+    </ResponseField>
+    <ResponseField name="value" type="string" required>
+      The value of the cookie
+    </ResponseField>
+    <ResponseField name="domain" type="string" required>
+      The domain for which the cookie is valid
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Usage
+
+```javascript
+{
+  "parts": "https://example.com/members-only",
+  "set_cookie": {
+    "name": "session_id",
+    "value": "abc123xyz",
+    "domain": "example.com"
+  }
+}
+```
+
+## Behavior
+
+The specified cookie is set before any requests are made during the rendering process. This allows you to:
+
+- Access authenticated content
+- View personalized pages
+- Bypass login screens
+- Render content that requires specific cookie values
+
+## Important Notes
+
+- The `domain` value must match the domain of the URL being rendered
+- Only one cookie can be set per request
+- Cookies are only valid for the current rendering session
+
+## Use Cases
+
+This parameter is particularly useful for:
+
+1. **Authenticated content**: Render pages that require user login by providing session cookies.
+
+2. **Personalized views**: Capture user-specific views by setting identity or preference cookies.
+
+3. **Testing**: Validate how pages appear with different cookie values.
+
+## Examples
+
+### Accessing a Members-Only Page
+
+```javascript
+{
+  "parts": "https://example.com/members-only",
+  "set_cookie": {
+    "name": "session_id",
+    "value": "abc123xyz",
+    "domain": "example.com"
+  }
+}
+```
+
+### Setting a User Preference
+
+```javascript
+{
+  "parts": "https://example.com/dashboard",
+  "set_cookie": {
+    "name": "theme",
+    "value": "dark",
+    "domain": "example.com"
+  }
+}
+```
+
+### Bypassing a Cookie Consent Banner
+
+```javascript
+{
+  "parts": "https://example.com",
+  "set_cookie": {
+    "name": "cookie_consent",
+    "value": "accepted",
+    "domain": "example.com"
+  }
+}
+``` 

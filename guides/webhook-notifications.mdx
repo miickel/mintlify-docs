@@ -1,0 +1,106 @@
+---
+title: "Webhook notifications"
+description: "Receive notifications when your asynchronous PDF rendering is complete"
+icon: "bell"
+---
+
+The `webhook` parameter allows you to configure a notification endpoint that will be called when asynchronous rendering is complete.
+
+## Overview
+
+When rendering PDFs asynchronously, you may want to be notified when the process is complete. The `webhook` parameter lets you specify a URL that will receive a notification with details about the completed rendering.
+
+## Parameter Details
+
+<ResponseField name="webhook" type="object">
+  Configuration for webhook notifications when asynchronous rendering is complete
+  <Expandable title="Properties">
+    <ResponseField name="url" type="string" required>
+      URL that will receive a POST request when rendering is complete
+    </ResponseField>
+    <ResponseField name="headers" type="object">
+      Custom HTTP headers to include in the webhook request
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Usage
+
+```javascript
+{
+  "parts": "https://example.com",
+  "destination": {
+    "provider": "aws_s3",
+    "bucket": "my-pdf-bucket",
+    "path": "reports/document.pdf"
+  },
+  "webhook": {
+    "url": "https://myapp.com/webhooks/pdf-complete"
+  }
+}
+```
+
+## Behavior
+
+When your asynchronous rendering job completes, the API will:
+
+1. Send a POST request to the specified webhook URL
+2. Include information about the rendering job status and the location of the generated PDF
+3. Include any custom headers you specified in the request
+
+## Webhook Payload
+
+The webhook will receive a JSON payload with information about the completed rendering job, including:
+
+```javascript
+{
+  "status": "completed",
+  "destination": {
+    "provider": "aws_s3",
+    "bucket": "my-pdf-bucket",
+    "path": "reports/document.pdf"
+  },
+  "job_id": "job_123456789",
+  "completed_at": "2023-04-01T12:34:56Z"
+}
+```
+
+## Use Cases
+
+This parameter is particularly useful for:
+
+1. **Workflow automation**: Trigger subsequent processes once the PDF is ready
+2. **User notifications**: Alert users when their requested document is available
+3. **System integration**: Update your application's state based on PDF generation status
+
+## Example with Custom Headers
+
+```javascript
+{
+  "parts": "https://example.com",
+  "destination": {
+    "provider": "aws_s3",
+    "bucket": "my-pdf-bucket",
+    "path": "reports/document.pdf"
+  },
+  "webhook": {
+    "url": "https://myapp.com/webhooks/pdf-complete",
+    "headers": {
+      "Authorization": "Bearer your-secret-token",
+      "X-Custom-Header": "custom-value"
+    }
+  }
+}
+```
+
+## Security Considerations
+
+When using webhooks:
+
+1. **Use HTTPS**: Always use HTTPS URLs for your webhook endpoints
+2. **Validate requests**: Include authentication headers and verify them in your webhook handler
+3. **Implement retry logic**: Be prepared to handle webhook delivery failures
+
+## Related Parameters
+
+The `webhook` parameter is typically used with the `destination` parameter, which specifies where the rendered PDF will be stored. Together, they enable a fully asynchronous workflow for PDF generation. 

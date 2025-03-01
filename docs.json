@@ -8,6 +8,11 @@
     "dark": "#0467c9"
   },
   "favicon": "/favicon.svg",
+  "api": {
+    "auth": {
+      "method": "bearer"
+    }
+  },
   "navigation": {
     "tabs": [
       {
@@ -22,21 +27,32 @@
             ]
           },
           {
-            "group": "Essentials",
+            "group": "Guides",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "guides/cloud-destination",
+              "guides/content-parts",
+              "guides/emulate-media-type",
+              "guides/evaluate-javascript",
+              "guides/output-encoding",
+              "guides/output-format",
+              "guides/page-backgrounds",
+              "guides/page-headers-footers",
+              "guides/page-margins",
+              "guides/page-orientation",
+              "guides/page-scale",
+              "guides/page-selection",
+              "guides/page-size",
+              "guides/prefer-css-page-size",
+              "guides/set-cookies",
+              "guides/wait-for-element",
+              "guides/webhook-notifications"
             ]
           }
         ]
       },
       {
         "tab": "API Reference",
-        "openapi": "https://plenty-readers-greet.loca.lt/openapi"
+        "openapi": "https://clear-moose-change.loca.lt/openapi"
       }
     ]
   },

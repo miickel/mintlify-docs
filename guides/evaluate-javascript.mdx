@@ -1,0 +1,102 @@
+---
+title: "Evaluate JavaScript"
+description: "Execute JavaScript code in the page context before rendering to manipulate the DOM or wait for dynamic content"
+icon: "code"
+---
+
+The `evaluate_js` parameter allows you to run JavaScript code in the page context before rendering occurs.
+
+## Overview
+
+When rendering a webpage with dynamic content, you may need to manipulate the DOM, trigger actions, or wait for content to load. The `evaluate_js` parameter lets you execute custom JavaScript code during the rendering process.
+
+## Parameter Details
+
+<ResponseField name="evaluate_js" type="object">
+  Allows you to run JavaScript code in the page context before rendering occurs
+  <Expandable title="Properties">
+    <ResponseField name="expression" type="string" required>
+      JavaScript code to execute in the page context
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Usage
+
+```javascript
+{
+  "parts": "https://example.com",
+  "evaluate_js": {
+    "expression": "document.querySelector('.load-more-button').click()"
+  }
+}
+```
+
+## Behavior
+
+The JavaScript expression is evaluated in the page context before rendering begins. If the expression returns a Promise, the rendering process will wait for the Promise to resolve before proceeding.
+
+## Use Cases
+
+This parameter is particularly useful for:
+
+1. **Loading dynamic content**: Trigger actions that load additional content before capturing the page.
+
+2. **DOM manipulation**: Modify page elements, styles, or attributes before rendering.
+
+3. **Waiting for conditions**: Ensure specific elements or data are available before rendering.
+
+## Examples
+
+### Clicking a Button
+
+```javascript
+{
+  "parts": "https://example.com",
+  "evaluate_js": {
+    "expression": "document.querySelector('#load-more').click()"
+  }
+}
+```
+
+### Waiting for Content to Load
+
+```javascript
+{
+  "parts": "https://example.com",
+  "evaluate_js": {
+    "expression": "new Promise(resolve => { 
+      const checkContent = () => {
+        if (document.querySelector('.dynamic-content')) {
+          resolve();
+        } else {
+          setTimeout(checkContent, 100);
+        }
+      };
+      checkContent();
+    })"
+  }
+}
+```
+
+### Modifying Page Content
+
+```javascript
+{
+  "parts": "https://example.com",
+  "evaluate_js": {
+    "expression": "document.querySelectorAll('.advertisement').forEach(ad => ad.remove())"
+  }
+}
+```
+
+### Scrolling the Page
+
+```javascript
+{
+  "parts": "https://example.com",
+  "evaluate_js": {
+    "expression": "window.scrollTo(0, document.body.scrollHeight)"
+  }
+}
+```

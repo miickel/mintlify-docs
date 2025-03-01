@@ -1,0 +1,92 @@
+---
+title: "Page selection"
+description: "Control which pages to include in the output PDF using page ranges"
+icon: "file-lines"
+---
+
+The `pages` parameter allows you to specify which pages from the rendered document should be included in the final PDF output.
+
+## Overview
+
+When generating a PDF from content that spans multiple pages, you may want to include only specific pages or ranges of pages. The `pages` parameter lets you select exactly which pages appear in the final document.
+
+## Parameter Details
+
+<ResponseField name="pages" type="string" default="''">
+  Specifies which pages from the rendered document should be included in the final PDF output
+  
+  Default: Empty string (includes all pages)
+</ResponseField>
+
+## Usage
+
+```javascript
+{
+  "parts": "https://example.com",
+  "pages": "1-5, 8, 11-13"
+}
+```
+
+## Behavior
+
+The `pages` parameter accepts a comma-separated list of page ranges using one-based indexing:
+
+- **Single page**: `"3"` (includes only page 3)
+- **Page range**: `"1-5"` (includes pages 1 through 5)
+- **Multiple selections**: `"1-5, 8, 11-13"` (includes pages 1-5, page 8, and pages 11-13)
+- **Empty string**: `""` (includes all pages)
+
+Important notes:
+- Pages will always be included in the document's natural order regardless of the specified range
+- Each page will only be included once, even if it appears multiple times in the range specification
+- One-based indexing is used (the first page is page 1, not page 0)
+
+## Use Cases
+
+This parameter is particularly useful for:
+
+1. **Extracting specific content**: Include only the relevant pages from a larger document.
+
+2. **Creating document excerpts**: Generate shorter versions of documents with only key pages.
+
+3. **Removing unnecessary pages**: Exclude cover pages, advertisements, or other unwanted content.
+
+4. **Combining specific pages**: Select non-consecutive pages that belong together logically.
+
+## Examples
+
+### Including Only the First Page
+
+```javascript
+{
+  "parts": "https://example.com",
+  "pages": "1"
+}
+```
+
+### Including a Range of Pages
+
+```javascript
+{
+  "parts": "https://example.com",
+  "pages": "2-10"
+}
+```
+
+### Including Multiple Ranges and Individual Pages
+
+```javascript
+{
+  "parts": "https://example.com",
+  "pages": "1-3, 5, 7-9"
+}
+```
+
+### Including All Pages (Default Behavior)
+
+```javascript
+{
+  "parts": "https://example.com",
+  "pages": ""
+}
+``` 

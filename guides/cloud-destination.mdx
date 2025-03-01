@@ -1,0 +1,85 @@
+---
+title: "Cloud destination"
+description: "Configure where your asynchronously rendered PDFs are stored in the cloud"
+icon: "cloud-arrow-up"
+---
+
+The `destination` parameter specifies where your PDF will be stored when using asynchronous rendering.
+
+## Overview
+
+When rendering PDFs asynchronously, the generated file needs to be stored somewhere. The `destination` parameter allows you to configure cloud storage details for the rendered PDF.
+
+## Parameter Details
+
+<ResponseField name="destination" type="object" required>
+  Configuration for where your PDF will be stored when using asynchronous rendering
+  <Expandable title="Properties">
+    <ResponseField name="provider" type="enum<string>" required>
+      The cloud storage provider to use
+      
+      Available options: `aws_s3`, `google_cloud_storage`
+    </ResponseField>
+    <ResponseField name="bucket" type="string" required>
+      The storage bucket name where the PDF will be stored
+    </ResponseField>
+    <ResponseField name="path" type="string" required>
+      Storage path within the bucket, including the filename
+      
+      Example: `pdfs/document.pdf`
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Usage
+
+```javascript
+{
+  "parts": "https://example.com",
+  "destination": {
+    "provider": "aws_s3",
+    "bucket": "my-pdf-bucket",
+    "path": "reports/document.pdf"
+  }
+}
+```
+
+## Behavior
+
+When you submit an asynchronous rendering request with a destination, the API will:
+
+1. Accept your request and return immediately with a success status
+2. Process the rendering in the background
+3. Upload the completed PDF to the specified cloud destination
+4. Notify you via webhook (if configured) when the process is complete
+
+## Use Cases
+
+This parameter is particularly useful for:
+
+1. **Large document generation**: When rendering complex or large documents that may take time to process
+2. **Background processing**: When you want to initiate rendering without waiting for completion
+3. **Direct cloud storage**: When you want PDFs delivered directly to your cloud storage without intermediary steps
+
+## Related Parameters
+
+The `destination` parameter is often used together with the `webhook` parameter, which allows you to receive a notification when the rendering is complete:
+
+```javascript
+{
+  "parts": "https://example.com",
+  "destination": {
+    "provider": "aws_s3",
+    "bucket": "my-pdf-bucket",
+    "path": "reports/document.pdf"
+  },
+  "webhook": {
+    "url": "https://myapp.com/webhooks/pdf-complete",
+    "headers": {
+      "Authorization": "Bearer your-secret-token"
+    }
+  }
+}
+```
+
+The webhook will receive a POST request with information about the completed rendering, including the status and location of the generated PDF. 

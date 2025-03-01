@@ -1,0 +1,71 @@
+---
+title: "Emulate media type"
+description: "Control how media queries are applied during rendering by specifying screen or print media types"
+icon: "display"
+---
+
+The `emulate_media_type` parameter allows you to control which CSS media queries are applied during the rendering process.
+
+## Overview
+
+When rendering a webpage, different CSS styles can be applied based on the intended output medium. The `emulate_media_type` parameter lets you specify which media type to emulate during rendering.
+
+## Parameter Details
+
+<ResponseField name="emulate_media_type" type="enum<string>" default="print">
+  Controls which CSS media queries are applied during the rendering process
+  
+  Available options: `screen`, `print`
+</ResponseField>
+
+## Usage
+
+```javascript
+{
+  "parts": "https://en.wikipedia.org/wiki/Special:Random",
+  "emulate_media_type": "print" // or "screen"
+}
+```
+
+## Behavior
+
+- **`screen`**: Emulates the screen media type, applying CSS styles intended for display on computer screens, tablets, smartphones, etc.
+- **`print`**: Emulates the print media type, applying CSS styles intended for printed output.
+
+## Use Cases
+
+This parameter is particularly useful for:
+
+1. **Print-optimized captures**: Use `print` to capture a version of the page optimized for printing, which may hide navigation elements, adjust colors, or modify layouts.
+
+2. **Web display captures**: Use `screen` to capture the page as it would appear on a typical device screen.
+
+3. **Dual-purpose content delivery**: Maintain a single codebase while being able to generate both web-optimized views (`screen`) and PDF-ready versions (`print`) of the same content.
+
+## Example
+
+Many websites use media queries to provide different styles for screen and print:
+
+```css
+/* Styles for screen display */
+@media screen {
+  .navigation {
+    display: block;
+  }
+  body {
+    background-color: #f0f0f0;
+  }
+}
+
+/* Styles for print output */
+@media print {
+  .navigation {
+    display: none;
+  }
+  body {
+    background-color: white;
+  }
+}
+```
+
+By setting `emulate_media_type` to either `screen` or `print`, you can control which of these styles are applied during rendering.
