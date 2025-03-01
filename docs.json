@@ -21,31 +21,45 @@
           {
             "group": "Get Started",
             "pages": [
-              "introduction",
               "quickstart",
               "rate-limits"
             ]
           },
           {
-            "group": "Guides",
+            "group": "Page Configuration",
             "pages": [
-              "guides/cloud-destination",
-              "guides/content-parts",
-              "guides/emulate-media-type",
-              "guides/evaluate-javascript",
-              "guides/output-encoding",
-              "guides/output-format",
-              "guides/page-backgrounds",
-              "guides/page-headers-footers",
-              "guides/page-margins",
-              "guides/page-orientation",
-              "guides/page-scale",
-              "guides/page-selection",
-              "guides/page-size",
-              "guides/prefer-css-page-size",
-              "guides/set-cookies",
-              "guides/wait-for-element",
-              "guides/webhook-notifications"
+              "guides/page-configuration/page-size",
+              "guides/page-configuration/page-orientation",
+              "guides/page-configuration/page-margins",
+              "guides/page-configuration/page-scale",
+              "guides/page-configuration/page-selection",
+              "guides/page-configuration/page-headers-footers",
+              "guides/page-configuration/page-backgrounds",
+              "guides/page-configuration/prefer-css-page-size"
+            ]
+          },
+          {
+            "group": "Content Handling",
+            "pages": [
+              "guides/content-handling/content-parts",
+              "guides/content-handling/wait-for-element",
+              "guides/content-handling/evaluate-javascript",
+              "guides/content-handling/set-cookies",
+              "guides/content-handling/emulate-media-type"
+            ]
+          },
+          {
+            "group": "Output Options",
+            "pages": [
+              "guides/output-options/output-format",
+              "guides/output-options/output-encoding"
+            ]
+          },
+          {
+            "group": "Asynchronous Processing",
+            "pages": [
+              "guides/async-processing/cloud-destination",
+              "guides/async-processing/webhook-notifications"
             ]
           }
         ]
