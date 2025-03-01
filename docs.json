@@ -9,8 +9,10 @@
   },
   "favicon": "/favicon.svg",
   "api": {
-    "auth": {
-      "method": "bearer"
+    "mdx": {
+      "auth": {
+        "method": "bearer"
+      }
     }
   },
   "navigation": {
@@ -20,11 +22,7 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": [
-              "introduction",
-              "quickstart",
-              "rate-limits"
-            ]
+            "pages": ["introduction", "quickstart", "rate-limits"]
           },
           {
             "group": "Page Configuration",
