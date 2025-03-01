@@ -28,38 +28,38 @@
           {
             "group": "Page Configuration",
             "pages": [
-              "guides/page-configuration/page-size",
-              "guides/page-configuration/page-orientation",
-              "guides/page-configuration/page-margins",
-              "guides/page-configuration/page-scale",
-              "guides/page-configuration/page-selection",
-              "guides/page-configuration/page-headers-footers",
-              "guides/page-configuration/page-backgrounds",
-              "guides/page-configuration/prefer-css-page-size"
+              "features/page-configuration/page-size",
+              "features/page-configuration/page-orientation",
+              "features/page-configuration/page-margins",
+              "features/page-configuration/page-scale",
+              "features/page-configuration/page-selection",
+              "features/page-configuration/page-headers-footers",
+              "features/page-configuration/page-backgrounds",
+              "features/page-configuration/prefer-css-page-size"
             ]
           },
           {
             "group": "Content Handling",
             "pages": [
-              "guides/content-handling/content-parts",
-              "guides/content-handling/wait-for-element",
-              "guides/content-handling/evaluate-javascript",
-              "guides/content-handling/set-cookies",
-              "guides/content-handling/emulate-media-type"
+              "features/content-handling/content-parts",
+              "features/content-handling/wait-for-element",
+              "features/content-handling/evaluate-javascript",
+              "features/content-handling/set-cookies",
+              "features/content-handling/emulate-media-type"
             ]
           },
           {
             "group": "Output Options",
             "pages": [
-              "guides/output-options/output-format",
-              "guides/output-options/output-encoding"
+              "features/output-options/output-format",
+              "features/output-options/output-encoding"
             ]
           },
           {
             "group": "Asynchronous Processing",
             "pages": [
-              "guides/async-processing/cloud-destination",
-              "guides/async-processing/webhook-notifications"
+              "features/async-processing/cloud-destination",
+              "features/async-processing/webhook-notifications"
             ]
           }
         ]
