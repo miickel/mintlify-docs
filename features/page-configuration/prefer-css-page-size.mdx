@@ -5,3 +5,82 @@ icon: "css3"
 ---
 
 The `prefer_css_page_size` parameter allows you to control whether CSS-defined page sizes take precedence over the API-specified paper size.
+
+## Overview
+
+When rendering a webpage to PDF, there can be a conflict between the page size specified in the API request (via the `size` parameter) and any page size defined in the document's CSS using `@page` rules. The `prefer_css_page_size` parameter determines which of these takes precedence.
+
+## Parameter Details
+
+<ResponseField name="prefer_css_page_size" type="boolean" default={false}>
+  Controls whether CSS-defined page sizes take precedence over the API-specified paper size
+</ResponseField>
+
+## Usage
+
+```javascript
+{
+  "parts": "https://example.com",
+  "size": {
+    "preset": "a4"
+  },
+  "prefer_css_page_size": true
+}
+```
+
+## Behavior
+
+- **`true`**: CSS page size defined in `@page` rules takes precedence over the `size` parameter. Content will be rendered using the dimensions specified in CSS.
+- **`false`**: The `size` parameter takes precedence over any CSS-defined page size. Content will be scaled to fit the specified paper size.
+
+## Use Cases
+
+This parameter is particularly useful for:
+
+1. **CSS-driven layouts**: When your HTML content includes specific `@page` size rules that are essential to the layout design.
+
+2. **Consistent sizing across sources**: When you want to ensure all documents use the same paper size regardless of their CSS settings.
+
+3. **Web-to-print workflows**: When converting web content that already has print-specific CSS rules that should be respected.
+
+## Example with CSS @page Rules
+
+Consider HTML content with the following CSS:
+
+```css
+@page {
+  size: 5in 8in; /* Sets page size to 5 inches by 8 inches */
+}
+
+.content {
+  margin: 0.5in;
+}
+```
+
+### With prefer_css_page_size `true`
+
+```javascript
+{
+  "parts": "<html><style>@page { size: 5in 8in; }</style><body>Content</body></html>",
+  "size": {
+    "preset": "a4"
+  },
+  "prefer_css_page_size": true
+}
+```
+
+Result: The PDF will use the 5in × 8in size from the CSS, ignoring the A4 size specified in the API request.
+
+### With prefer_css_page_size `false`
+
+```javascript
+{
+  "parts": "<html><style>@page { size: 5in 8in; }</style><body>Content</body></html>",
+  "size": {
+    "preset": "a4"
+  },
+  "prefer_css_page_size": false
+}
+```
+
+Result: The PDF will use the A4 size (210mm × 297mm) specified in the API request, and the content will be scaled to fit.
