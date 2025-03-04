@@ -12,7 +12,8 @@
     "mdx": {
       "auth": {
         "method": "bearer"
-      }
+      },
+      "server": "https://vortexpdf.com"
     }
   },
   "navigation": {
@@ -65,7 +66,7 @@
       },
       {
         "tab": "API Reference",
-        "openapi": "https://clear-moose-change.loca.lt/openapi"
+        "openapi": "https://vortexpdf.com/openapi"
       }
     ]
   },
