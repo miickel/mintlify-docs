@@ -1,0 +1,45 @@
+---
+title: "API Keys"
+description: "Learn how to authenticate API requests"
+---
+
+The Vortex PDF API uses Bearer token authentication to secure API requests.
+
+## Overview
+
+API keys are used to authenticate requests to the Vortex PDF API. Each API key is associated with your account and has specific permissions.
+
+## Authentication headers
+
+<ResponseField name="Authorization" type="string" required>
+  The HTTP header used for authentication
+  
+  Format: `Bearer YOUR_API_KEY`
+</ResponseField>
+
+## Usage
+
+Include your API key in the `Authorization` header of your HTTP requests:
+
+```bash
+curl -X POST https://vortexpdf.com/api/v1/render \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "parts": "https://example.com"
+  }'
+```
+
+## API key management
+
+### Obtaining API keys
+
+1. Log in to your [Vortex PDF Dashboard](https://vortexpdf.com/dashboard)
+2. Navigate to the API Keys section
+3. Create a new API key
+
+### Security best practices
+
+- **Keep keys secure**: Never expose your API keys in client-side code or public repositories
+- **Use environment variables**: Store API keys in environment variables rather than hardcoding them
+- **Rotate keys regularly**: Periodically generate new API keys and deprecate old ones

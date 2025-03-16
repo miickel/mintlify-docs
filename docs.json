@@ -23,7 +23,7 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["introduction", "quickstart", "rate-limits"]
+            "pages": ["introduction", "quickstart", "api-keys", "rate-limits"]
           },
           {
             "group": "Page Configuration",
