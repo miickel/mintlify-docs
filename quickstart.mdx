@@ -18,33 +18,258 @@ Before you can use the API, you need to create an account and get an API key.
   <Card
     title="Get your API key"
     icon="key"
-    href="https://mintlify.com/docs/development"
+    href="https://vortexpdf.com/api-keys"
   >
     Once you have an account, you can create an API key.
   </Card>
 </CardGroup>
 
-## Show me the code
+## Rendering a simple PDF
 
-Insert your API key and make your first API call.
+The simplest way to generate a PDF is using the synchronous endpoint. This endpoint accepts your content and returns the generated PDF directly in the response.
+
+### Basic request structure
+
+<CodeGroup>
+
+```sh cURL
+curl -X POST 'https://vortexpdf.com/api/v1/renderers/pdf' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "parts": ["<h1>Hello World</h1><p>This is my first PDF!</p>"]
+  }' \
+  --output hello-world.pdf
+```
+
+```javascript Node.js
+const fs = require('fs');
+
+async function generatePDF() {
+  try {
+    const response = await fetch('https://vortexpdf.com/api/v1/renderers/pdf', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer YOUR_API_KEY',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        parts: ['<h1>Hello World</h1><p>This is my first PDF!</p>']
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+    const pdfBuffer = await response.arrayBuffer();
+    fs.writeFileSync('hello-world.pdf', Buffer.from(pdfBuffer));
+    console.log('PDF saved successfully!');
+  } catch (error) {
+    console.error('Error generating PDF:', error);
+  }
+}
+
+generatePDF();
+```
+
+```python Python
+import requests
+
+response = requests.post(
+    'https://vortexpdf.com/api/v1/renderers/pdf',
+    headers={
+        'Authorization': 'Bearer YOUR_API_KEY',
+        'Content-Type': 'application/json',
+    },
+    json={
+        'parts': ['<h1>Hello World</h1><p>This is my first PDF!</p>']
+    }
+)
+
+# Save the PDF to a file
+with open('hello-world.pdf', 'wb') as f:
+    f.write(response.content)
+```
+
+</CodeGroup>
+
+### Rendering from a URL
+
+You can also render a PDF from an existing webpage:
+
+<CodeGroup>
+
+```sh cURL
+curl -X POST 'https://vortexpdf.com/api/v1/renderers/pdf' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "parts": ["https://example.com"]
+  }' \
+  --output example.pdf
+```
+
+```javascript Node.js
+const fs = require('fs');
+
+async function generatePDFFromURL() {
+  try {
+    const response = await fetch('https://vortexpdf.com/api/v1/renderers/pdf', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer YOUR_API_KEY',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        parts: ['https://example.com']
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+    const pdfBuffer = await response.arrayBuffer();
+    fs.writeFileSync('example.pdf', Buffer.from(pdfBuffer));
+    console.log('PDF saved successfully!');
+  } catch (error) {
+    console.error('Error generating PDF:', error);
+  }
+}
+
+generatePDFFromURL();
+```
+
+```python Python
+import requests
+
+response = requests.post(
+    'https://vortexpdf.com/api/v1/renderers/pdf',
+    headers={
+        'Authorization': 'Bearer YOUR_API_KEY',
+        'Content-Type': 'application/json',
+    },
+    json={
+        'parts': ['https://example.com']
+    }
+)
+
+with open('example.pdf', 'wb') as f:
+    f.write(response.content)
+```
+
+</CodeGroup>
+
+### Customizing your PDF
+
+You can customize various aspects of your PDF using additional parameters:
 
 <CodeGroup>
 
 ```javascript cURL
-curl -X POST 'https://api.vortexpdf.com/v1/pdf' \
+curl -X POST 'https://vortexpdf.com/api/v1/renderers/pdf' \
   -H 'Authorization: Bearer YOUR_API_KEY' \
   -H 'Content-Type: application/json' \
-  -d '{"text": "Hello, world!"}'
+  -d '{
+    "parts": ["<h1>Custom PDF</h1><p>With custom settings</p>"],
+    "size": "letter",
+    "orientation": "landscape",
+    "margin": {
+      "top": 10,
+      "right": 10,
+      "bottom": 10,
+      "left": 10,
+      "unit": "mm"
+    },
+    "header_template": "<div style=\"text-align: center; width: 100%; font-size: 10px;\"><span class=\"date\"></span></div>",
+    "footer_template": "<div style=\"text-align: center; width: 100%; font-size: 10px;\">Page <span class=\"pageNumber\"></span> of <span class=\"totalPages\"></span></div>",
+    "render_header_footer": true
+  }' \
+  --output custom.pdf
 ```
 
-Congratulations! You've made your first API call.
+```javascript Node.js
+const fs = require('fs');
 
-```elixir Elixir
-# tbd
+async function generateCustomPDF() {
+  try {
+    const response = await fetch('https://vortexpdf.com/api/v1/renderers/pdf', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer YOUR_API_KEY',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        parts: ['<h1>Custom PDF</h1><p>With custom settings</p>'],
+        size: 'letter',
+        orientation: 'landscape',
+        margin: {
+          top: 10,
+          right: 10,
+          bottom: 10,
+          left: 10,
+          unit: 'mm'
+        },
+        header_template: '<div style="text-align: center; width: 100%; font-size: 10px;"><span class="date"></span></div>',
+        footer_template: '<div style="text-align: center; width: 100%; font-size: 10px;">Page <span class="pageNumber"></span> of <span class="totalPages"></span></div>',
+        render_header_footer: true
+      })
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+    const pdfBuffer = await response.arrayBuffer();
+    fs.writeFileSync('custom.pdf', Buffer.from(pdfBuffer));
+    console.log('Custom PDF saved successfully!');
+  } catch (error) {
+    console.error('Error generating custom PDF:', error);
+  }
+}
+
+generateCustomPDF();
 ```
 
 ```python Python
-# TBD
+import requests
+
+response = requests.post(
+    'https://vortexpdf.com/api/v1/renderers/pdf',
+    headers={
+        'Authorization': 'Bearer YOUR_API_KEY',
+        'Content-Type': 'application/json',
+    },
+    json={
+        'parts': ['<h1>Custom PDF</h1><p>With custom settings</p>'],
+        'size': 'letter',
+        'orientation': 'landscape',
+        'margin': {
+            'top': 10,
+            'right': 10,
+            'bottom': 10,
+            'left': 10,
+            'unit': 'mm'
+        },
+        'header_template': '<div style="text-align: center; width: 100%; font-size: 10px;"><span class="date"></span></div>',
+        'footer_template': '<div style="text-align: center; width: 100%; font-size: 10px;">Page <span class="pageNumber"></span> of <span class="totalPages"></span></div>',
+        'render_header_footer': True
+    }
+)
+
+with open('custom.pdf', 'wb') as f:
+    f.write(response.content)
 ```
 
 </CodeGroup>
+
+## Next steps
+
+Now that you've created your first PDF, explore more advanced features:
+
+- Combine multiple HTML snippets or URLs into a single PDF
+- Add headers and footers with dynamic content
+- Customize page size, orientation, and margins
+- Use JavaScript evaluation to manipulate content before rendering
+- Try the asynchronous endpoint for faster processing

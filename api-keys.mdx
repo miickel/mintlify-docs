@@ -22,7 +22,7 @@ API keys are used to authenticate requests to the Vortex PDF API. Each API key i
 Include your API key in the `Authorization` header of your HTTP requests:
 
 ```bash
-curl -X POST https://vortexpdf.com/api/v1/render \
+curl -X POST https://vortexpdf.com/api/v1/renderers/pdf \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
