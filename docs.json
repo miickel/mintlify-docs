@@ -27,7 +27,8 @@
               "introduction",
               "quickstart",
               "api-keys",
-              "rate-limits"
+              "rate-limits",
+              "api-credits"
             ]
           },
           {
