@@ -10,7 +10,7 @@ The `evaluate_js` parameter allows you to run JavaScript code in the page contex
 
 When rendering a webpage with dynamic content, you may need to manipulate the DOM, trigger actions, or wait for content to load. The `evaluate_js` parameter lets you execute custom JavaScript code during the rendering process.
 
-## Parameter Details
+## Parameter details
 
 <ResponseField name="evaluate_js" type="object">
   Allows you to run JavaScript code in the page context before rendering occurs
@@ -36,7 +36,7 @@ When rendering a webpage with dynamic content, you may need to manipulate the DO
 
 The JavaScript expression is evaluated in the page context before rendering begins. If the expression returns a Promise, the rendering process will wait for the Promise to resolve before proceeding.
 
-## Use Cases
+## Use cases
 
 This parameter is particularly useful for:
 
@@ -59,7 +59,7 @@ This parameter is particularly useful for:
 }
 ```
 
-### Waiting for Content to Load
+### Waiting for content to load
 
 ```javascript
 {
@@ -79,7 +79,7 @@ This parameter is particularly useful for:
 }
 ```
 
-### Modifying Page Content
+### Modifying page content
 
 ```javascript
 {
@@ -90,7 +90,7 @@ This parameter is particularly useful for:
 }
 ```
 
-### Scrolling the Page
+### Scrolling the page
 
 ```javascript
 {

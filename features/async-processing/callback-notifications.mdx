@@ -1,25 +1,25 @@
 ---
-title: "Webhook notifications"
+title: "Callback notifications"
 description: "Receive notifications when your asynchronous PDF rendering is complete"
 icon: "bell"
 ---
 
-The `webhook` parameter allows you to configure a notification endpoint that will be called when asynchronous rendering is complete.
+The `callback` parameter allows you to configure a notification endpoint that will be called when asynchronous rendering is complete.
 
 ## Overview
 
-When rendering PDFs asynchronously, you may want to be notified when the process is complete. The `webhook` parameter lets you specify a URL that will receive a notification with details about the completed rendering.
+When rendering PDFs asynchronously, you may want to be notified when the process is complete. The `callback` parameter lets you specify a URL that will receive a notification with details about the completed rendering.
 
-## Parameter Details
+## Parameter details
 
-<ResponseField name="webhook" type="object">
-  Configuration for webhook notifications when asynchronous rendering is complete
+<ResponseField name="callback" type="object">
+  Configuration for callback notifications when asynchronous rendering is complete
   <Expandable title="Properties">
     <ResponseField name="url" type="string" required>
       URL that will receive a POST request when rendering is complete
     </ResponseField>
     <ResponseField name="headers" type="object">
-      Custom HTTP headers to include in the webhook request
+      Custom HTTP headers to include in the callback request
     </ResponseField>
   </Expandable>
 </ResponseField>
@@ -34,8 +34,8 @@ When rendering PDFs asynchronously, you may want to be notified when the process
     "bucket": "my-pdf-bucket",
     "path": "reports/document.pdf"
   },
-  "webhook": {
-    "url": "https://myapp.com/webhooks/pdf-complete"
+  "callback": {
+    "url": "https://myapp.com/callbacks/pdf-complete"
   }
 }
 ```
@@ -44,13 +44,13 @@ When rendering PDFs asynchronously, you may want to be notified when the process
 
 When your asynchronous rendering job completes, the API will:
 
-1. Send a POST request to the specified webhook URL
+1. Send a POST request to the specified callback URL
 2. Include information about the rendering job status and the location of the generated PDF
 3. Include any custom headers you specified in the request
 
-## Webhook Payload
+## Callback payload
 
-The webhook will receive a JSON payload with information about the completed rendering job, including:
+The callback will receive a JSON payload with information about the completed rendering job, including:
 
 ```javascript
 {
@@ -65,7 +65,7 @@ The webhook will receive a JSON payload with information about the completed ren
 }
 ```
 
-## Use Cases
+## Use cases
 
 This parameter is particularly useful for:
 
@@ -73,7 +73,7 @@ This parameter is particularly useful for:
 2. **User notifications**: Alert users when their requested document is available
 3. **System integration**: Update your application's state based on PDF generation status
 
-## Example with Custom Headers
+## Example with custom headers
 
 ```javascript
 {
@@ -83,8 +83,8 @@ This parameter is particularly useful for:
     "bucket": "my-pdf-bucket",
     "path": "reports/document.pdf"
   },
-  "webhook": {
-    "url": "https://myapp.com/webhooks/pdf-complete",
+  "callback": {
+    "url": "https://myapp.com/callbacks/pdf-complete",
     "headers": {
       "Authorization": "Bearer your-secret-token",
       "X-Custom-Header": "custom-value"
@@ -93,14 +93,14 @@ This parameter is particularly useful for:
 }
 ```
 
-## Security Considerations
+## Security considerations
 
-When using webhooks:
+When using callbacks:
 
-1. **Use HTTPS**: Always use HTTPS URLs for your webhook endpoints
-2. **Validate requests**: Include authentication headers and verify them in your webhook handler
-3. **Implement retry logic**: Be prepared to handle webhook delivery failures
+1. **Use HTTPS**: Always use HTTPS URLs for your callback endpoints
+2. **Validate requests**: Include authentication headers and verify them in your callback handler
+3. **Implement retry logic**: Be prepared to handle callback delivery failures
 
-## Related Parameters
+## Related parameters
 
-The `webhook` parameter is typically used with the `destination` parameter, which specifies where the rendered PDF will be stored. Together, they enable a fully asynchronous workflow for PDF generation. 
+The `callback` parameter is typically used with the `destination` parameter, which specifies where the rendered PDF will be stored. Together, they enable a fully asynchronous workflow for PDF generation. 

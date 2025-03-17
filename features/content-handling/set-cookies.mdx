@@ -10,7 +10,7 @@ The `set_cookie` parameter allows you to set cookies before the rendering proces
 
 When rendering webpages that require authentication or personalization, you may need to set specific cookies. The `set_cookie` parameter lets you configure cookies that will be sent with requests during the rendering process.
 
-## Parameter Details
+## Parameter details
 
 <ResponseField name="set_cookie" type="object">
   Configures cookies that will be sent with requests during the rendering process
@@ -49,13 +49,13 @@ The specified cookie is set before any requests are made during the rendering pr
 - Bypass login screens
 - Render content that requires specific cookie values
 
-## Important Notes
+## Important notes
 
 - The `domain` value must match the domain of the URL being rendered
 - Only one cookie can be set per request
 - Cookies are only valid for the current rendering session
 
-## Use Cases
+## Use cases
 
 This parameter is particularly useful for:
 
@@ -67,7 +67,7 @@ This parameter is particularly useful for:
 
 ## Examples
 
-### Accessing a Members-Only Page
+### Accessing a members-only page
 
 ```javascript
 {
@@ -80,7 +80,7 @@ This parameter is particularly useful for:
 }
 ```
 
-### Setting a User Preference
+### Setting a user preference
 
 ```javascript
 {
@@ -93,7 +93,7 @@ This parameter is particularly useful for:
 }
 ```
 
-### Bypassing a Cookie Consent Banner
+### Bypassing a cookie consent banner
 
 ```javascript
 {

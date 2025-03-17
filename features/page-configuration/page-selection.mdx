@@ -10,7 +10,7 @@ The `pages` parameter allows you to specify which pages from the rendered docume
 
 When generating a PDF from content that spans multiple pages, you may want to include only specific pages or ranges of pages. The `pages` parameter lets you select exactly which pages appear in the final document.
 
-## Parameter Details
+## Parameter details
 
 <ResponseField name="pages" type="string" default={""}>
   Specifies which pages from the rendered document should be included in the final PDF output
@@ -41,7 +41,7 @@ Important notes:
 - Each page will only be included once, even if it appears multiple times in the range specification
 - One-based indexing is used (the first page is page 1, not page 0)
 
-## Use Cases
+## Use cases
 
 This parameter is particularly useful for:
 
@@ -55,7 +55,7 @@ This parameter is particularly useful for:
 
 ## Examples
 
-### Including Only the First Page
+### Including only the first page
 
 ```javascript
 {
@@ -64,7 +64,7 @@ This parameter is particularly useful for:
 }
 ```
 
-### Including a Range of Pages
+### Including a range of pages
 
 ```javascript
 {
@@ -73,7 +73,7 @@ This parameter is particularly useful for:
 }
 ```
 
-### Including Multiple Ranges and Individual Pages
+### Including multiple ranges and individual pages
 
 ```javascript
 {
@@ -82,7 +82,7 @@ This parameter is particularly useful for:
 }
 ```
 
-### Including All Pages (Default Behavior)
+### Including all pages (default behavior)
 
 ```javascript
 {

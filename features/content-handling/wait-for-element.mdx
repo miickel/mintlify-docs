@@ -10,7 +10,7 @@ The `wait_for` parameter allows you to delay rendering until a specific element 
 
 When rendering pages with dynamic content, you may need to ensure certain elements are fully loaded before capturing the page. The `wait_for` parameter lets you specify an element and attribute to wait for before proceeding with rendering.
 
-## Parameter Details
+## Parameter details
 
 <ResponseField name="wait_for" type="object">
   Delays rendering until a specific element attribute is present on the page
@@ -40,7 +40,7 @@ When rendering pages with dynamic content, you may need to ensure certain elemen
 
 The rendering process will wait until the specified attribute exists on the element matching the provided CSS selector. This is useful for ensuring that dynamic content has finished loading before the PDF is generated.
 
-## Use Cases
+## Use cases
 
 This parameter is particularly useful for:
 
@@ -52,7 +52,7 @@ This parameter is particularly useful for:
 
 ## Examples
 
-### Waiting for Content to Load
+### Waiting for content to load
 
 ```javascript
 {
@@ -64,7 +64,7 @@ This parameter is particularly useful for:
 }
 ```
 
-### Waiting for Images to Load
+### Waiting for images to load
 
 ```javascript
 {
@@ -76,7 +76,7 @@ This parameter is particularly useful for:
 }
 ```
 
-### Waiting for Application State
+### Waiting for application state
 
 ```javascript
 {
@@ -88,7 +88,7 @@ This parameter is particularly useful for:
 }
 ```
 
-### Combining with evaluate_js
+### Combining with `evaluate_js`
 
 You can use `evaluate_js` to set the attribute that `wait_for` is looking for:
 

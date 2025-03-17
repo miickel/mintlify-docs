@@ -10,7 +10,7 @@ The `header_template` and `footer_template` parameters allow you to add custom H
 
 When generating PDFs, it's often useful to include consistent headers and footers on each page. These templates support special CSS classes for dynamic content like page numbers, dates, and titles.
 
-## Parameter Details
+## Parameter details
 
 <ResponseField name="header_template" type="string">
   HTML content to display at the top of each page
@@ -39,7 +39,7 @@ When generating PDFs, it's often useful to include consistent headers and footer
 }
 ```
 
-## Special CSS Classes
+## Special CSS classes
 
 Both templates support these special CSS classes for dynamic content:
 
@@ -49,7 +49,7 @@ Both templates support these special CSS classes for dynamic content:
 - **`pageNumber`**: Current page number
 - **`totalPages`**: Total number of pages in the document
 
-## Styling Guidelines
+## Styling guidelines
 
 1. Templates must contain valid HTML
 2. Use inline styles for consistent rendering
@@ -57,7 +57,7 @@ Both templates support these special CSS classes for dynamic content:
 4. Keep content within reasonable height to avoid overlapping with main content
 5. Use font sizes appropriate for headers/footers (typically 8-12px)
 
-## Use Cases
+## Use cases
 
 These parameters are particularly useful for:
 
@@ -68,7 +68,7 @@ These parameters are particularly useful for:
 
 ## Examples
 
-### Basic Page Numbers
+### Basic page numbers
 
 ```javascript
 {
@@ -78,7 +78,7 @@ These parameters are particularly useful for:
 }
 ```
 
-### Company Header with Logo
+### Company header with logo
 
 ```javascript
 {
@@ -88,7 +88,7 @@ These parameters are particularly useful for:
 }
 ```
 
-### Date and URL Footer
+### Date and URL footer
 
 ```javascript
 {
@@ -98,7 +98,7 @@ These parameters are particularly useful for:
 }
 ```
 
-### Three-Column Layout
+### Three-column layout
 
 ```javascript
 {

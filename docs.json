@@ -27,8 +27,8 @@
               "introduction",
               "quickstart",
               "api-keys",
-              "rate-limits",
-              "api-credits"
+              "api-credits",
+              "rate-limits"
             ]
           },
           {
@@ -65,7 +65,7 @@
             "group": "Asynchronous Processing",
             "pages": [
               "features/async-processing/cloud-destination",
-              "features/async-processing/webhook-notifications"
+              "features/async-processing/callback-notifications"
             ]
           }
         ]

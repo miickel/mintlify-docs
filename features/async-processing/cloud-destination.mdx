@@ -10,7 +10,7 @@ The `destination` parameter specifies where your PDF will be stored when using a
 
 When rendering PDFs asynchronously, the generated file needs to be stored somewhere. The `destination` parameter allows you to configure cloud storage details for the rendered PDF.
 
-## Parameter Details
+## Parameter details
 
 <ResponseField name="destination" type="object" required>
   Configuration for where your PDF will be stored when using asynchronous rendering
@@ -53,7 +53,7 @@ When you submit an asynchronous rendering request with a destination, the API wi
 3. Upload the completed PDF to the specified cloud destination
 4. Notify you via webhook (if configured) when the process is complete
 
-## Use Cases
+## Use cases
 
 This parameter is particularly useful for:
 
@@ -61,7 +61,7 @@ This parameter is particularly useful for:
 2. **Background processing**: When you want to initiate rendering without waiting for completion
 3. **Direct cloud storage**: When you want PDFs delivered directly to your cloud storage without intermediary steps
 
-## Related Parameters
+## Related parameters
 
 The `destination` parameter is often used together with the `webhook` parameter, which allows you to receive a notification when the rendering is complete:
 

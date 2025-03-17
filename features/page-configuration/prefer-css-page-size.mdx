@@ -10,7 +10,7 @@ The `prefer_css_page_size` parameter allows you to control whether CSS-defined p
 
 When rendering a webpage to PDF, there can be a conflict between the page size specified in the API request (via the `size` parameter) and any page size defined in the document's CSS using `@page` rules. The `prefer_css_page_size` parameter determines which of these takes precedence.
 
-## Parameter Details
+## Parameter details
 
 <ResponseField name="prefer_css_page_size" type="boolean" default={false}>
   Controls whether CSS-defined page sizes take precedence over the API-specified paper size
@@ -33,7 +33,7 @@ When rendering a webpage to PDF, there can be a conflict between the page size s
 - **`true`**: CSS page size defined in `@page` rules takes precedence over the `size` parameter. Content will be rendered using the dimensions specified in CSS.
 - **`false`**: The `size` parameter takes precedence over any CSS-defined page size. Content will be scaled to fit the specified paper size.
 
-## Use Cases
+## Use cases
 
 This parameter is particularly useful for:
 
@@ -43,7 +43,7 @@ This parameter is particularly useful for:
 
 3. **Web-to-print workflows**: When converting web content that already has print-specific CSS rules that should be respected.
 
-## Example with CSS @page Rules
+## Example with CSS @page rules
 
 Consider HTML content with the following CSS:
 
