@@ -5,7 +5,7 @@
   "colors": {
     "primary": "#0467c9",
     "light": "#72DACA",
-    "dark": "#0467c9"
+    "dark": "#72DACA"
   },
   "favicon": "/favicon.svg",
   "api": {
@@ -23,7 +23,12 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": ["introduction", "quickstart", "api-keys", "rate-limits"]
+            "pages": [
+              "introduction",
+              "quickstart",
+              "api-keys",
+              "rate-limits"
+            ]
           },
           {
             "group": "Page Configuration",
@@ -83,13 +88,12 @@
       {
         "label": "Status",
         "href": "https://status.vortexpdf.com"
+      },
+      {
+        "label": "Dashboard",
+        "href": "https://vortexpdf.com/dashboard"
       }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://vortexpdf.com/dashboard"
-    }
+    ]
   },
   "footer": {
     "socials": {
