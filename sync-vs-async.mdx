@@ -1,0 +1,251 @@
+---
+title: "Sync vs Async"
+description: "Understand the differences between synchronous and asynchronous PDF generation"
+icon: arrows-spin
+---
+
+Vortex PDF offers two distinct methods for generating PDFs: synchronous and asynchronous processing. Each approach has specific use cases and advantages depending on your application requirements.
+
+## Synchronous processing
+
+With synchronous processing, your API request waits for the PDF generation to complete, and the rendered PDF is returned directly in the response.
+
+**Endpoint:** `POST /api/v1/renderers/pdf` 🔗 [API reference](/api-reference/render-a-pdf-synchronously)
+
+### When to use synchronous processing
+
+- **Immediate PDF delivery** - When you need to return the PDF directly to users
+- **Simple documents** - For generating relatively small or simple PDFs (fewer than 10 pages)
+- **Interactive applications** - When users are actively waiting for the document
+- **Testing and development** - For quicker iteration during development
+
+### How it works
+
+1. Your application makes a request to the synchronous endpoint
+2. Vortex PDF renders the document while the connection remains open
+3. Once complete, the PDF binary (or base64-encoded string) is returned in the response
+4. Your application can immediately use or serve the PDF
+
+## Asynchronous processing
+
+With asynchronous processing, your request is queued for background processing. The API responds immediately with a confirmation, and the generated PDF is stored in your specified cloud storage location.
+
+**Endpoint:** `POST /api/v1/renderers/pdf/async` 🔗 [API reference](/api-reference/render-a-pdf-asynchronously)
+
+### When to use asynchronous processing
+
+- **Large documents** - For generating complex or lengthy PDFs (10+ pages)
+- **Batch processing** - When generating multiple PDFs without blocking your application
+- **Background jobs** - For non-interactive PDF generation tasks
+- **Scheduled reports** - For recurring document generation that doesn't require immediate access
+- **High-volume processing** - When handling peaks in PDF generation demand
+
+### How it works
+
+1. Your application makes a request to the asynchronous endpoint
+2. Vortex PDF immediately returns a confirmation response
+3. The rendering job is processed in the background
+4. Upon completion, the PDF is stored in your specified cloud storage location
+5. Optionally, a webhook notification is sent to your callback URL
+6. In case of transient failures, the system will automatically retry the rendering process up to 5 times before reporting a failure
+
+## Required configuration differences
+
+While most rendering options are identical between the two methods, asynchronous processing has some configuration differences:
+
+| Configuration     | Synchronous                 | Asynchronous                     |
+| ----------------- | --------------------------- | -------------------------------- |
+| `output_encoding` | Required (binary or base64) | Not applicable                   |
+| `destination`     | Not applicable              | Optional (cloud storage details) |
+| `callback`        | Not applicable              | Optional (webhook URL)           |
+
+<Note>
+  Before using custom cloud destinations, you must configure proper
+  authorization settings. See [Cloud
+  destination](/features/async-processing/cloud-destination#authorization-requirements)
+  for detailed setup instructions.
+</Note>
+
+### Default storage for async processing
+
+If you don't specify a `destination` parameter for asynchronous processing, Vortex PDF will automatically store your generated PDF in our public cloud storage:
+
+- **Bucket:** `public.vortexpdf.com`
+- **Region:** Multiple regions in the United States
+- **Lifecycle:** Files are automatically deleted after 14 days
+- **Access:** Public URL provided in callback response
+
+This default storage option is perfect for testing, development, or temporary document sharing scenarios.
+
+## Response differences
+
+The synchronous endpoint returns the actual PDF document in the response body, while the asynchronous endpoint returns a confirmation that the job has been accepted.
+
+### Synchronous response
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/pdf
+Content-Length: [length]
+
+[PDF binary data]
+```
+
+### Asynchronous response
+
+```
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "status": "accepted",
+  "message": "PDF generation job accepted and queued for processing"
+}
+```
+
+When using the default storage (no destination specified), the callback response payload will match Google Cloud Storage's response format.
+
+### Example callback payloads
+
+When using asynchronous processing, you'll receive a callback with details about the stored PDF. The payload structure varies depending on the storage provider.
+
+#### Google Cloud Storage
+
+When using Google Cloud Storage as the destination provider:
+
+```json
+{
+  "result": {
+    "softDeleteTime": null,
+    "contentLanguage": null,
+    "retention": null,
+    "md5Hash": "5TR1IQSkoGbgJJhCfp6tmw==",
+    "kmsKeyName": null,
+    "retentionExpirationTime": null,
+    "storageClass": "STANDARD",
+    "etag": "CMqUjvTDlIwDEAE=",
+    "timeFinalized": "2025-03-18T21:04:01.887Z",
+    "kind": "storage#object",
+    "customTime": null,
+    "contentEncoding": null,
+    "timeCreated": "2025-03-18T21:04:01.887Z",
+    "eventBasedHold": null,
+    "selfLink": "https://www.googleapis.com/storage/v1/b/public.vortexpdf.com/o/renders%2F9b57f4d1-7c42-4871-bd70-aff5a9d83929.pdf",
+    "metageneration": "1",
+    "name": "renders/9b57f4d1-7c42-4871-bd70-aff5a9d83929.pdf",
+    "id": "public.vortexpdf.com/renders/9b57f4d1-7c42-4871-bd70-aff5a9d83929.pdf/1742331841841738",
+    "timeStorageClassUpdated": "2025-03-18T21:04:01.887Z",
+    "componentCount": null,
+    "cacheControl": null,
+    "size": "5049",
+    "owner": null,
+    "restoreToken": null,
+    "updated": "2025-03-18T21:04:01.887Z",
+    "mediaLink": "https://storage.googleapis.com/download/storage/v1/b/public.vortexpdf.com/o/renders%2F9b57f4d1-7c42-4871-bd70-aff5a9d83929.pdf?generation=1742331841841738&alt=media",
+    "contentType": null,
+    "customerEncryption": null,
+    "timeDeleted": null,
+    "temporaryHold": null,
+    "generation": "1742331841841738",
+    "crc32c": "D1WLvw==",
+    "hardDeleteTime": null,
+    "bucket": "public.vortexpdf.com",
+    "metadata": null,
+    "acl": null,
+    "contentDisposition": null
+  },
+  "status": "success",
+  "timestamp": "2025-03-18T21:04:02.034537Z"
+}
+```
+
+#### AWS S3 storage
+
+When using AWS S3 as the destination provider:
+
+```json
+{
+  "result": {
+    "bucket": "partly-gradient",
+    "etag": "\"78a731a2e9b5899f73697570c509243c-1\"",
+    "key": "sEmNryuv.pdf",
+    "location": "https://s3.amazonaws.com/partly-gradient/sEmNryuv.pdf"
+  },
+  "status": "success",
+  "timestamp": "2025-03-18T21:20:29.582393Z"
+}
+```
+
+## Performance considerations
+
+- **Timeouts** - Synchronous requests may timeout for complex documents, especially with many images or complex layouts
+- **Connection stability** - Synchronous requests require maintaining an open connection throughout the rendering process
+- **Scaling** - Asynchronous processing handles traffic spikes more gracefully by queuing requests
+- **Resource utilization** - Asynchronous processing distributes your PDF generation load more evenly
+- **Automatic retries** - Asynchronous processing includes automatic retry logic for transient failures, increasing reliability for complex documents
+
+## Example: Synchronous rendering
+
+```json
+POST /api/v1/renderers/pdf HTTP/1.1
+Host: vortexpdf.com
+Authorization: Bearer YOUR_API_KEY
+Content-Type: application/json
+
+{
+  "parts": ["https://example.com"],
+  "output_encoding": "binary"
+}
+```
+
+## Example: Asynchronous rendering
+
+```json
+POST /api/v1/renderers/pdf/async HTTP/1.1
+Host: vortexpdf.com
+Authorization: Bearer YOUR_API_KEY
+Content-Type: application/json
+
+{
+  "parts": ["https://example.com"],
+  "callback": {
+    "url": "https://myapp.com/webhook/pdf-complete"
+  }
+}
+```
+
+### With custom destination
+
+```json
+POST /api/v1/renderers/pdf/async HTTP/1.1
+Host: vortexpdf.com
+Authorization: Bearer YOUR_API_KEY
+Content-Type: application/json
+
+{
+  "parts": ["https://example.com"],
+  "destination": {
+    "provider": "aws_s3",
+    "bucket": "my-pdf-bucket",
+    "path": "reports/example-report.pdf"
+  },
+  "callback": {
+    "url": "https://myapp.com/webhook/pdf-complete"
+  }
+}
+```
+
+## Best practices
+
+- Use synchronous processing for small documents and interactive user experiences
+- Switch to asynchronous processing for documents over 10 pages or with complex layouts
+- Use the default storage option for rapid development and testing
+- Configure your own cloud storage destination when:
+  - Running production workloads
+  - Handling sensitive or regulated information
+  - Needing to comply with data residency requirements (GDPR, HIPAA, etc.)
+  - Requiring specific geographic storage locations
+  - Implementing custom retention policies beyond 14 days
+- Implement proper error handling for both methods
+- Set appropriate timeouts for synchronous requests
+- Use webhook callbacks to trigger downstream processes when using asynchronous rendering

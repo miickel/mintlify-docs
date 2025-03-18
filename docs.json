@@ -28,7 +28,8 @@
               "quickstart",
               "api-keys",
               "api-credits",
-              "rate-limits"
+              "rate-limits",
+              "sync-vs-async"
             ]
           },
           {
