@@ -22,7 +22,7 @@
         "tab": "Guides",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "Get started",
             "pages": [
               "introduction",
               "quickstart",
@@ -32,7 +32,7 @@
             ]
           },
           {
-            "group": "Page Configuration",
+            "group": "Page configuration",
             "pages": [
               "features/page-configuration/page-size",
               "features/page-configuration/page-orientation",
@@ -45,7 +45,7 @@
             ]
           },
           {
-            "group": "Content Handling",
+            "group": "Content handling",
             "pages": [
               "features/content-handling/content-parts",
               "features/content-handling/wait-for-element",
@@ -55,14 +55,14 @@
             ]
           },
           {
-            "group": "Output Options",
+            "group": "Output options",
             "pages": [
               "features/output-options/output-format",
               "features/output-options/output-encoding"
             ]
           },
           {
-            "group": "Asynchronous Processing",
+            "group": "Asynchronous processing",
             "pages": [
               "features/async-processing/cloud-destination",
               "features/async-processing/callback-notifications"
