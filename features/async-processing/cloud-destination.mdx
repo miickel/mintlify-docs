@@ -31,6 +31,43 @@ When rendering PDFs asynchronously, the generated file needs to be stored somewh
   </Expandable>
 </ResponseField>
 
+## Authorization requirements
+
+Before using cloud destinations, you must grant Vortex PDF permission to upload files to your cloud storage:
+
+### Google Cloud Storage
+
+For Google Cloud Storage, grant access to the service account by:
+
+1. Navigate to your Google Cloud Console's IAM & Admin section
+2. Add the following service account: `astronaut@vortex-pdf.iam.gserviceaccount.com`
+3. Assign the role "Storage Object User" to this service account
+
+### AWS S3
+
+For AWS S3, add the following bucket policy to grant access:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::015796437331:user/vortex-pdf"
+            },
+            "Action": [
+                "s3:PutObject",
+                "s3:PutObjectAcl"
+            ],
+            "Resource": "arn:aws:s3:::YOUR-BUCKET-NAME/*"
+        }
+    ]
+}
+```
+
+Replace `YOUR-BUCKET-NAME` with your actual S3 bucket name.
+
 ## Usage
 
 ```javascript
