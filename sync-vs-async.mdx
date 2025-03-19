@@ -176,6 +176,62 @@ When using AWS S3 as the destination provider:
 }
 ```
 
+#### Error callback payloads
+
+When async PDF generation fails, you'll receive error details in the callback payload:
+
+##### Google Cloud Storage errors
+
+```json
+{
+  "result": {
+    "error": "gcs_error",
+    "message": "user@example.com does not have storage.objects.create access to the Google Cloud Storage object. Permission 'storage.objects.create' denied on resource (or it may not exist).",
+    "reason": "forbidden"
+  },
+  "status": "failure",
+  "timestamp": "2025-03-19T22:38:03.929130Z"
+}
+```
+
+```json
+{
+  "result": {
+    "error": "gcs_error",
+    "message": "The specified bucket does not exist.",
+    "reason": "notFound"
+  },
+  "status": "failure",
+  "timestamp": "2025-03-19T22:37:07.279620Z"
+}
+```
+
+##### AWS S3 errors
+
+```json
+{
+  "result": {
+    "code": "NoSuchBucket",
+    "error": "s3_error",
+    "message": "The specified bucket does not exist"
+  },
+  "status": "failure",
+  "timestamp": "2025-03-19T22:42:12.985100Z"
+}
+```
+
+```json
+{
+  "result": {
+    "code": "AccessDenied",
+    "error": "s3_error",
+    "message": "Access Denied"
+  },
+  "status": "failure",
+  "timestamp": "2025-03-19T22:42:49.106295Z"
+}
+```
+
 ## Performance considerations
 
 - **Timeouts** - Synchronous requests may timeout for complex documents, especially with many images or complex layouts
