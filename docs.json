@@ -49,6 +49,7 @@
             "group": "Content handling",
             "pages": [
               "features/content-handling/content-parts",
+              "features/content-handling/templates",
               "features/content-handling/wait-for-element",
               "features/content-handling/evaluate-javascript",
               "features/content-handling/set-cookies",

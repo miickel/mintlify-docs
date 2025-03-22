@@ -24,10 +24,10 @@ When generating a PDF, you need to specify what content to render. The `parts` p
     <ResponseField name="type" type="enum<string>" required>
       The type of content
       
-      Available options: `url`, `html`
+      Available options: `url`, `html`, `template`
     </ResponseField>
-    <ResponseField name="content" type="string" required>
-      The actual content to render (URL or HTML)
+    <ResponseField name="content" type="string | object" required>
+      The actual content to render. For `url` and `html` types, this is a string. For `template` type, this is an object with `template_id` and optional `context` properties.
     </ResponseField>
   </Expandable>
 </ResponseField>
@@ -42,6 +42,15 @@ When generating a PDF, you need to specify what content to render. The `parts` p
     {
       "type": "html",
       "content": "<div>Structured HTML content</div>"
+    },
+    {
+      "type": "template",
+      "content": {
+        "template_id": "invoice_template",
+        "context": {
+          "customer_name": "Acme Inc."
+        }
+      }
     }
   ]
 }
@@ -53,7 +62,10 @@ The `parts` parameter accepts three types of content:
 
 1. **URL strings**: Publicly accessible URLs that return HTML content.
 2. **HTML strings**: Raw HTML content that starts with a valid HTML tag.
-3. **Content objects**: Structured objects with `type` and `content` fields.
+3. **Content objects**: Structured objects with `type` and `content` fields. The content object can be:
+   - URL content with `type: "url"`
+   - HTML content with `type: "html"`
+   - Template content with `type: "template"` (see the [Templates](/features/content-handling/templates) page for details)
 
 Each content part is rendered sequentially in the order provided, creating a multi-page PDF where each part typically starts on a new page.
 
@@ -68,6 +80,8 @@ This parameter is particularly useful for:
 3. **Report generation**: Create comprehensive reports by combining dynamic web content with static templates.
 
 4. **Document assembly**: Build documents from multiple components stored in different locations.
+
+5. **Dynamic content injection**: Use templates with context data to generate personalized documents.
 
 ## Examples
 
@@ -115,7 +129,19 @@ This parameter is particularly useful for:
     {
       "type": "html",
       "content": "<div>Custom HTML content</div>"
+    },
+    {
+      "type": "template",
+      "content": {
+        "template_id": "invoice_template",
+        "context": {
+          "customer_name": "Acme Inc.",
+          "invoice_number": "INV-2023-001"
+        }
+      }
     }
   ]
 }
-``` 
+```
+
+For more details on using templates, see the [Templates](/features/content-handling/templates) documentation. 

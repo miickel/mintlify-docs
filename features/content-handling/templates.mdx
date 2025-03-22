@@ -1,0 +1,225 @@
+---
+title: Templates
+description: Use templates with context data to generate dynamic PDF content
+icon: cube
+---
+
+The template rendering feature allows you to generate dynamic HTML content from predefined templates and context data before converting it to PDF.
+
+## Overview
+
+Templates provide a powerful way to create dynamic, data-driven PDFs. Instead of sending complete HTML or URLs, you can reference a template and provide the context data to be injected into it. This approach is particularly useful for documents that follow a consistent structure but contain variable data, such as invoices, certificates, or personalized reports.
+
+## Parameter details
+
+When using templates in the `parts` array, you need to specify a content object with the following structure:
+
+<ResponseField name="type" type="string" required>
+  Must be set to `template` to use template rendering
+</ResponseField>
+
+<ResponseField name="content" type="object" required>
+  <Expandable title="Content Properties">
+    <ResponseField name="template_id" type="string" required>
+      Unique identifier for the template to use
+    </ResponseField>
+    <ResponseField name="context" type="object">
+      JSON object containing data to be inserted into the template
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Usage
+
+```javascript
+{
+  "parts": [
+    {
+      "type": "template",
+      "content": {
+        "template_id": "invoice_template",
+        "context": {
+          "customer_name": "Acme Inc.",
+          "invoice_number": "INV-2023-001",
+          "items": [
+            {
+              "description": "Product A",
+              "quantity": 2,
+              "price": 100
+            },
+            {
+              "description": "Product B",
+              "quantity": 1,
+              "price": 50
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
+```
+
+## How templates work
+
+1. You create and store templates in your Vortex PDF account (via the dashboard or template management API)
+2. Each template contains HTML markup with placeholders for dynamic content
+3. When rendering a PDF, you reference a template by its ID and provide context data
+4. The API processes the template, injects your context data, and renders the resulting HTML into the PDF
+
+## Template syntax
+
+Vortex PDF supports the Liquid template language for creating dynamic HTML templates. Liquid provides a flexible way to incorporate variables, logic, and loops into your templates. For comprehensive documentation on Liquid syntax, features, and usage examples, see [LiquidJS](https://liquidjs.com/).
+
+### Liquid basics
+
+- **Variables**: Access context data using double curly braces: `{{ variable_name }}`
+- **Filters**: Transform data with pipe characters: `{{ variable_name | upcase }}`
+- **Tags**: Control flow with curly brace percentage signs: `{% if condition %}...{% endif %}`
+- **Loops**: Iterate over arrays with `for` tags: `{% for item in items %}...{% endfor %}`
+
+### Example template
+
+Here's an example of an invoice template using Liquid syntax:
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Invoice #{{ invoice_number }}</title>
+  </head>
+  <body>
+    <header>
+      <h1>INVOICE</h1>
+    </header>
+
+    <div class="invoice-details">
+      <div>
+        <strong>Bill To:</strong>
+        <p>{{ customer_name }}</p>
+        {% if customer_address %}
+        <p>{{ customer_address }}</p>
+        {% endif %}
+      </div>
+      <div>
+        <p><strong>Invoice Number:</strong> {{ invoice_number }}</p>
+        <p><strong>Date:</strong> {{ invoice_date | default: "today" }}</p>
+        <p>
+          <strong>Due Date:</strong> {{ due_date | default: "30 days from today"
+          }}
+        </p>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+        <tr>
+          <td>{{ item.description }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>${{ item.price | round: 2 }}</td>
+          <td>${{ item.quantity | times: item.price | round: 2 }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="total">
+      {% assign total = 0 %} {% for item in items %} {% assign item_total =
+      item.quantity | times: item.price %} {% assign total = total | plus:
+      item_total %} {% endfor %}
+
+      <p>Total: ${{ total | round: 2 }}</p>
+    </div>
+
+    {% if payment_terms %}
+    <div class="payment-terms">
+      <h3>Payment Terms</h3>
+      <p>{{ payment_terms }}</p>
+    </div>
+    {% endif %}
+  </body>
+</html>
+```
+
+This template demonstrates several Liquid features:
+
+- Variable output with `{{ variable }}`
+- Conditional rendering with `{% if condition %}...{% endif %}`
+- Loops with `{% for item in items %}...{% endfor %}`
+- Filters for formatting values like `round` and mathematical operations
+- Variable assignment with `{% assign variable = value %}`
+
+## Benefits of using templates
+
+- **Separation of concerns**: Keep your presentation logic (templates) separate from your data
+- **Consistency**: Ensure a consistent look and feel across all your generated documents
+- **Efficiency**: Reduce payload size by sending only the data instead of complete HTML
+- **Maintainability**: Update templates centrally without changing your application code
+- **Reusability**: Use the same template with different data sets for various purposes
+
+## Template context
+
+The context object can contain any valid JSON data, including:
+
+- Simple key-value pairs
+- Nested objects
+- Arrays of data
+- Numbers, booleans, strings, and null values
+
+This flexibility allows you to provide complex data structures that can be rendered using conditional logic and loops in your templates.
+
+## Use cases
+
+Templates are ideal for generating:
+
+1. **Invoices and receipts**: Use customer information and line items to create professional invoices
+2. **Certificates**: Generate personalized certificates with recipient details and achievements
+3. **Reports**: Create data-driven reports with dynamic charts, tables, and text
+4. **Legal documents**: Populate legal templates with specific case details and parties involved
+5. **Personalized communications**: Generate customized letters, statements, or notices
+
+## Example: Combining templates with other content parts
+
+You can combine template-based content with other content types in a single PDF:
+
+```javascript
+{
+  "parts": [
+    {
+      "type": "url",
+      "content": "https://example.com/cover-page"
+    },
+    {
+      "type": "template",
+      "content": {
+        "template_id": "report_template",
+        "context": {
+          "title": "Monthly Performance Report",
+          "period": "January 2023",
+          "metrics": {
+            "revenue": 125000,
+            "customers": 450,
+            "growth": 12.5
+          }
+        }
+      }
+    },
+    {
+      "type": "html",
+      "content": "<h2>Appendix</h2><p>Additional information and disclaimers...</p>"
+    }
+  ]
+}
+```
+
+This example generates a PDF with a cover page from a URL, a dynamic report from a template, and a static appendix from HTML content.
