@@ -10,7 +10,7 @@ Vortex PDF offers two distinct methods for generating PDFs: synchronous and asyn
 
 With synchronous processing, your API request waits for the PDF generation to complete, and the rendered PDF is returned directly in the response.
 
-**Endpoint:** `POST /api/v1/renderers/pdf` 🔗 [API reference](/api-reference/renderers/render-a-pdf-synchronously)
+**Endpoint:** `POST /api/v1/renderers/pdf` 🔗 [API reference](/api-reference/renderers/create-pdf-synchronously)
 
 ### When to use synchronous processing
 
@@ -30,7 +30,7 @@ With synchronous processing, your API request waits for the PDF generation to co
 
 With asynchronous processing, your request is queued for background processing. The API responds immediately with a confirmation, and the generated PDF is stored in your specified cloud storage location.
 
-**Endpoint:** `POST /api/v1/renderers/pdf/async` 🔗 [API reference](/api-reference/renderers/render-a-pdf-asynchronously)
+**Endpoint:** `POST /api/v1/renderers/pdf/async` 🔗 [API reference](/api-reference/renderers/create-pdf-asynchronously)
 
 ### When to use asynchronous processing
 
