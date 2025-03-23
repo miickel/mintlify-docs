@@ -8,14 +8,6 @@
     "dark": "#72DACA"
   },
   "favicon": "/favicon.svg",
-  "api": {
-    "mdx": {
-      "auth": {
-        "method": "bearer"
-      },
-      "server": "https://vortexpdf.com"
-    }
-  },
   "navigation": {
     "tabs": [
       {
